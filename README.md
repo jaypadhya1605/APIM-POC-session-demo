@@ -49,7 +49,7 @@ somewhere. This puts it in the gateway, and then proves it.
 | `tests/` | `isolation-proofs.http` — the same assertions as REST calls |
 | `docs/` | Architecture, decisions, capacity, SMART Backend Services, control plane, cost model |
 | `runbooks/` | Payer onboarding, import troubleshooting |
-| `DEMO APIM FHIR Sept 1/` | 19-slide deck with speaker notes, demo script, Bruno collection, rendered evidence |
+| `DEMO APIM FHIR Sept 1/` | Bruno request collection, captured evidence, portal screenshots, rendered slides |
 | `briefing/` | Word runbook generator and the evidence figures it embeds |
 
 ## The six enforcement layers
