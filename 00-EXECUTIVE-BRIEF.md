@@ -23,7 +23,7 @@ Everything is in this folder. Nothing depends on a Microsoft-hosted demo tenant.
 
 Asked for twice on the call and not delivered until now.
 
-[diagrams/ahds-reference-architecture.drawio](diagrams/ahds-reference-architecture.drawio) — four pages, editable in the same
+[diagrams/northwind-ahds-reference-architecture.drawio](diagrams/northwind-ahds-reference-architecture.drawio) — four pages, editable in the same
 draw.io canvas that was on screen:
 
 | Page | Contents |
@@ -100,16 +100,18 @@ behaviour rather than an estimate. Recommendation: run it before committing to a
 
 | | |
 |---|---|
-| This POC, running 24×7 | ≈ **$316/month** |
-| This POC, per demo day | ≈ **$10.40** |
-| A two-hour smoke test | ≈ **$0.90** |
+| This POC, running 24×7 | ≈ **$160/month** |
+| This POC, per demo day | ≈ **$5** |
+| A two-hour smoke test | ≈ **$1** |
 | Northwind Health production estimate, 1.4 TB + 30M resources/month | ≈ **$800/month** for FHIR consumption |
 
-There is **no per-instance hourly charge** on AHDS FHIR — billing is consumption-based. Forty
-lightly-used payer instances do not cost forty times one busy instance. This is the single most
-common objection to Option 1 and it does not hold.
+There is **no hourly charge of any kind** on AHDS FHIR — billing is consumption-based across
+requests, storage and export volume. The two FHIR services in this POC billed **$0.00** in August.
+Forty lightly-used payer instances do not cost forty times one busy instance. This is the single
+most common objection to Option 1 and it does not hold.
 
-There is also **no pause button**. Delete the resource group between demos.
+The cost that does accrue hourly is **APIM**, at 96% of the POC bill. Delete the resource group
+between demos for that reason, not for FHIR.
 Breakdown: [docs/08-cost-model.md](docs/08-cost-model.md).
 
 ---
@@ -118,7 +120,7 @@ Breakdown: [docs/08-cost-model.md](docs/08-cost-model.md).
 
 | # | Artifact | Why |
 |---|---|---|
-| 1 | [diagrams/ahds-reference-architecture.drawio](diagrams/ahds-reference-architecture.drawio) | The ask from 8/12 |
+| 1 | [diagrams/northwind-ahds-reference-architecture.drawio](diagrams/northwind-ahds-reference-architecture.drawio) | The ask from 8/12 |
 | 2 | [docs/02-architecture-decisions.md](docs/02-architecture-decisions.md) | Every open item from the call, closed |
 | 3 | [docs/03-platform-questions.md](docs/03-platform-questions.md) | All seven questions, including Q7 which had no prior answer |
 | 4 | [docs/04-import-403-rootcause.md](docs/04-import-403-rootcause.md) | The blocker in dev |

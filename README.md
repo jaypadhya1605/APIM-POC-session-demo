@@ -77,11 +77,12 @@ and the payer list are all environment-specific.
 
 ## Cost
 
-Roughly **$450/month** left running 24x7 for the two-payer POC, or **~$60/month** if you
-delete the resource group between demos — AHDS FHIR has no pause button and bills whether
-or not it receives a request. Production estimate at ~1.4 TB and 30-40 payers is
-**about $2,200/month**. See [docs/08-cost-model.md](docs/08-cost-model.md), including why
-forty FHIR instances do *not* cost forty times as much.
+Roughly **$160/month** left running 24x7 for the two-payer POC, and **~96% of that is
+APIM** — the two FHIR services billed **$0.00** last month. Workspace-based Azure Health
+Data Services has no hourly meter at all; it bills on requests, stored GB and export
+volume, so instance count is not a billable dimension. Production estimate at ~1.4 TB and
+30-40 payers is **about $1,700/month**, of which ~$800 is FHIR consumption. See
+[docs/08-cost-model.md](docs/08-cost-model.md) for the actual billed meters.
 
 ---
 

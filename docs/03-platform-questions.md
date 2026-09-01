@@ -32,11 +32,11 @@ subscriptions — rather than as a payer boundary.
 
 ### Cost implication, stated directly
 
-There is **no per-instance hourly charge**. AHDS FHIR bills on consumption: request volume,
-structured storage, and provisioned throughput if you opt into it. Forty lightly-used payer
-instances do not cost forty times one busy instance. At Northwind Health's stated volume — 1.4 TB and
-~30M resources/month — expect roughly **$800/month** for the FHIR tier regardless of how that
-traffic is distributed across instances.
+There is **no hourly charge of any kind**. AHDS FHIR bills on consumption: request volume,
+structured storage, and export volume. Forty lightly-used payer instances do not cost forty times
+one busy instance — instance count is not a billable dimension. At Northwind Health's stated volume —
+1.4 TB and ~30M resources/month — expect roughly **$800/month** for the FHIR tier regardless of how
+that traffic is distributed across instances.
 
 This matters because "40 instances sounds expensive" is the most common objection to this design,
 and it is not correct.
@@ -206,7 +206,7 @@ Validate **before** `$import`, and make the suppression policy your own:
 
 1. `POST {fhir}/{Type}/$validate` returns an `OperationOutcome` with `issue[].severity` and
    `issue[].details.coding.code`.
-2. Apply a customer-owned suppression list — for example "`information` and `warning` pass;
+2. Apply a Northwind Health-owned suppression list — for example "`information` and `warning` pass;
    `error` on `us-core-6` for payers still on 3.1.1 passes with a recorded exception".
 3. Route clean resources to `pdex/`, rejects to `quarantine/` with the `OperationOutcome` alongside.
 4. `$import` only the clean set.

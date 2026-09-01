@@ -720,9 +720,9 @@ txt(s, 0.62, 6.42, 5.9, 0.34,
 # ---------------------------------------------------------------- 17  cost
 s = new()
 head(s, "Cost", "Forty instances is not forty times the cost")
-for i, (v, l, col) in enumerate([("~$450", "per month, POC running continuously", TEAL),
-                                 ("~$10", "per demo day, deleted in between", GREEN),
-                                 ("~$2,200", "per month, production estimate at scale", NAVY)]):
+for i, (v, l, col) in enumerate([("~$160", "per month, POC running continuously", TEAL),
+                                 ("~$5", "per demo day, deleted in between", GREEN),
+                                 ("~$1,700", "per month, production estimate at scale", NAVY)]):
     x = 0.62 + i * 4.1
     card(s, x, 1.66, 3.86, 1.72)
     rect(s, x, 1.66, 3.86, 0.055, fill=col)
@@ -733,8 +733,8 @@ rect(s, 0.62, 3.6, 0.055, 2.42, fill=TEAL)
 txt(s, 1.0, 3.86, 5.2, 0.3, "WHY THE MULTIPLE DOES NOT APPLY", size=10, bold=True,
     color=TEAL)
 for i, t in enumerate([
-        "FHIR services bill on provisioned throughput and stored data — not per instance.",
-        "Splitting the same workload across more services divides the throughput; it does not duplicate it.",
+        "AHDS FHIR has no hourly meter. It bills on requests, stored data and export volume.",
+        "Instance count is not a billable dimension. The same traffic costs the same on one service or forty.",
         "The gateway, Log Analytics and storage are shared fixed costs across all payers.",
         "The variable cost that actually scales is stored data, and that is the same volume either way."]):
     y = 4.24 + i * 0.44
@@ -746,10 +746,10 @@ rect(s, 6.78, 3.6, 0.055, 2.42, fill=AMBER)
 txt(s, 7.16, 3.86, 5.2, 0.3, "THE ONE COST CONTROL THAT MATTERS", size=10,
     bold=True, color=AMBER)
 txt(s, 7.16, 4.24, 5.2, 1.5,
-    "A FHIR service has no pause state. A provisioned service bills whether or not "
-    "anyone calls it.\n\nFor a POC, the environment rebuilds from the template in "
-    "about twenty minutes. Deleting it between sessions is the difference between "
-    "$450 a month and $10 a day.",
+    "The hourly cost is the gateway, not FHIR. APIM bills whether or not anyone "
+    "calls it; the FHIR services billed $0.00 last month.\n\nFor a POC, the "
+    "environment rebuilds from the template in about twenty minutes. Deleting it "
+    "between sessions is the difference between $160 a month and $5 a day.",
     size=11.5, color=INK, line_spacing=1.3)
 
 txt(s, 0.62, 6.24, 12.1, 0.34,

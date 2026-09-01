@@ -51,7 +51,7 @@ docs/
   07-apim-control-plane.md   the six policy layers and why they are ordered that way
   08-cost-model.md
 diagrams/
-  ahds-reference-architecture.drawio   4 pages, editable
+  northwind-ahds-reference-architecture.drawio   4 pages, editable
   architecture.mmd                                Mermaid rendering
 infra/
   main.bicep, main.bicepparam, modules/           the whole environment
@@ -131,8 +131,8 @@ which is better hygiene than the Key Vault path it replaces.
 
 ## Cost control
 
-≈ $450/month if left running; ≈ $10/demo day if deleted between sessions. **AHDS FHIR has no pause
-button.**
+≈ $160/month if left running; ≈ $5/demo day if deleted between sessions. **The hourly cost is APIM,
+not FHIR** — the two FHIR services billed $0.00 last month.
 
 ```powershell
 az group delete -n rg-ahds-fhir-poc --yes --no-wait

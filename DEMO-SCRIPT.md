@@ -95,7 +95,7 @@ Two FHIR services, one per payer, each with its own system-assigned identity. Ad
 payer is one array entry in [infra/main.bicepparam](infra/main.bicepparam) and a redeploy — never a
 hand-built instance.
 
-Open [diagrams/ahds-reference-architecture.drawio](diagrams/ahds-reference-architecture.drawio),
+Open [diagrams/northwind-ahds-reference-architecture.drawio](diagrams/northwind-ahds-reference-architecture.drawio),
 page 2, and confirm this is the option that was agreed: physical at the payer, logical at the
 contract.
 
@@ -197,7 +197,7 @@ The most persuasive moment is a control failing correctly.
 
 ```powershell
 # Grant a payer a direct FHIR role - the "helpful debugging" mistake
-$appId = az ad app list --display-name cmsdqm-payerb --query "[0].appId" -o tsv
+$appId = az ad app list --display-name northwind-cmsdqm-payerb --query "[0].appId" -o tsv
 $spId  = az ad sp show --id $appId --query id -o tsv
 $fhirA = az resource show -g rg-ahds-fhir-poc `
   --resource-type Microsoft.HealthcareApis/workspaces/fhirservices `
@@ -252,8 +252,9 @@ removes the problem entirely.
 az group delete -n rg-ahds-fhir-poc --yes --no-wait
 ```
 
-AHDS FHIR has no pause state — a provisioned service bills whether or not it is used. Delete between
-demos: ~$10 per demo day versus ~$450 per month left running.
+APIM bills by the hour whether or not a call arrives, and it is 96% of this environment's bill —
+FHIR itself costs nothing at rest. Delete between demos: ~$5 per demo day versus ~$160 per month
+left running.
 
 ---
 
