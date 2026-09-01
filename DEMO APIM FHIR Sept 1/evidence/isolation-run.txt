@@ -1,0 +1,22 @@
+WARNING: The output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. For more information, see https://aka.ms/azadsp-cli
+WARNING: The output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. For more information, see https://aka.ms/azadsp-cli
+
+  # Test                                Expected         Actual Result
+  - ----                                --------         ------ ------
+  1 own data readable                   200                 200 PASS
+  2 Group export accepted               202                 202 PASS
+  3 capability statement                200                 200 PASS
+  4 payer B app, valid payer A audience 403                 403 PASS
+  5 payer B token, payer B audience     401/403             401 PASS
+  6 unentitled Group export             403                 403 PASS
+  7 write on outbound route             403                 403 PASS
+  8 payer credential on inbound route   403                 403 PASS
+  9 export on inbound route             403                 403 PASS
+ 10 system-level export                 403                 403 PASS
+ 11 patient-level export                403                 403 PASS
+ 12 payer token straight to AHDS        403                 403 PASS
+ 13 caller-supplied _tag overridden     200                 200 PASS
+ 14 untagged inbound write rejected     400/403             403 PASS
+ 15 second export within 5 min          429                 429 PASS
+13b body contains only own contracts    CT-3456/CT-7788 CT-3456 PASS
+

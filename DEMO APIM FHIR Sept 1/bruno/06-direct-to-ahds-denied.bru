@@ -1,0 +1,40 @@
+meta {
+  name: 06 Payer goes straight to AHDS - EXPECT 403
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{fhirA}}/Patient?_count=5
+  body: none
+  auth: none
+}
+
+params:query {
+  _count: 5
+}
+
+headers {
+  Authorization: Bearer {{tokA}}
+  Accept: application/fhir+json
+}
+
+assert {
+  res.status: eq 403
+}
+
+docs {
+  Assertion 12. The one that closes the "can they just go around it" question.
+
+  No APIM in this request at all - the URL is the FHIR service hostname
+  directly, and the token is payer A's own valid token.
+
+  403, not 401. Read the difference out loud: Entra authenticated the caller
+  perfectly well. AHDS then looked for a role assignment for that principal
+  and found none, because the payer applications hold zero Azure role
+  assignments. The only principal with FHIR Data Contributor is the APIM
+  managed identity - shown in portal tab 5.
+
+  Skipping the gateway does not skip the control. It removes the only means
+  of access.
+}

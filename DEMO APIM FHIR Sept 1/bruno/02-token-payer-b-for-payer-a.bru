@@ -1,0 +1,37 @@
+meta {
+  name: 02 Token - payer B, minted for payer A audience
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://login.microsoftonline.com/{{tenant}}/oauth2/v2.0/token
+  body: formUrlEncoded
+  auth: none
+}
+
+body:form-urlencoded {
+  grant_type: client_credentials
+  client_id: {{payerBAppId}}
+  client_secret: {{payerBSecret}}
+  scope: {{fhirA}}/.default
+}
+
+script:post-response {
+  bru.setVar("tokB_forA", res.body.access_token);
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  This SUCCEEDS, and it is meant to.
+
+  Entra will happily mint Fabrikam's application a correctly signed token for
+  Contoso's audience - nothing about that is invalid at the identity layer.
+  The token is real. The signature is real. The audience matches.
+
+  Say this out loud before running request 04, because it makes the 403 there
+  mean something: the credential is legitimate, and it is still refused.
+}

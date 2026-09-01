@@ -1,0 +1,37 @@
+meta {
+  name: 03 Payer A reads its own cohort - EXPECT 200
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{gateway}}/payera/outbound/Patient?_count=5&_tag=https://northwind.org/fhir/contract|CT-9001
+  body: none
+  auth: none
+}
+
+params:query {
+  _count: 5
+  _tag: https://northwind.org/fhir/contract|CT-9001
+}
+
+headers {
+  Authorization: Bearer {{tokA}}
+  Accept: application/fhir+json
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Look at the _tag in the query string. It asks for CT-9001, which belongs to
+  Fabrikam - a contract this caller does not hold.
+
+  The response still comes back 200, containing only CT-3456 and CT-7788.
+
+  Layer 4b overwrites a caller-supplied _tag rather than merging it. The payer
+  cannot widen their own scope by editing the query string, and they cannot
+  narrow it to someone else's contract either. Expand a Patient in the response
+  and read meta.tag to show it.
+}

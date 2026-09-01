@@ -1,0 +1,40 @@
+apim/policies/payer-outbound.xml   -   LAYER 2: ENTITLEMENT + CROSS-PAYER GUARD
+
+<!-- Resolve the calling application to the contracts it may see. -->
+<set-variable name="callerAppId" value="@{
+    var jwt = (Jwt)context.Variables["jwt"];
+    string[] v;
+    if (jwt.Claims.TryGetValue("azp",   out v) && v.Length > 0) { return v[0]; }
+    if (jwt.Claims.TryGetValue("appid", out v) && v.Length > 0) { return v[0]; }
+    return "";
+}" />
+
+<set-variable name="entitlement" value="@{
+    var raw   = "{{payer-entitlements}}".Replace((char)39, (char)34);
+    var map   = JObject.Parse(raw);
+    var appId = (string)context.Variables["callerAppId"];
+    var e     = map[appId];
+    return e == null ? "" : e.ToString(Newtonsoft.Json.Formatting.None);
+}" />
+
+<!-- Not onboarded -> 403 before the request ever reaches FHIR. -->
+<choose>
+  <when condition="@(string.IsNullOrEmpty((string)context.Variables["entitlement"]))">
+    <return-response><set-status code="403" reason="Forbidden" /> ... </return-response>
+  </when>
+</choose>
+
+<set-variable name="payerKey" value="@(JObject.Parse(
+    (string)context.Variables["entitlement"])["payer"].ToString())" />
+
+<!-- Cross-payer guard: an entitlement issued for payer B must never be
+     usable on payer A's endpoint, even if the token validates. -->
+<choose>
+  <when condition="@((string)context.Variables["payerKey"] != "__PAYER_KEY__")">
+    <return-response><set-status code="403" reason="Forbidden" /> ... </return-response>
+  </when>
+</choose>
+
+   __PAYER_KEY__ is substituted per API at deploy time (payera / payerb),
+   so the same policy source produces two non-interchangeable endpoints.
+   This is the control proven by assertion 4.

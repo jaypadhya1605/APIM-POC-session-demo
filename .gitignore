@@ -1,0 +1,30 @@
+# Generated sample data - regenerate with scripts/generate-samples.ps1
+samples/generated/
+
+# Filled-in test collection: contains client secrets when built with -IncludeSecrets
+tests/*.local.http
+
+# Payer handoff sheets (no credential material, but environment-specific)
+out/
+
+# Load test output
+loadtest/results-*.csv
+
+# Compiled ARM
+infra/**/*.json
+!infra/**/*.bicepparam
+
+# Never commit key or certificate material of any kind
+*.pem
+*.key
+*.crt
+*.cer
+*.der
+*.pfx
+*.p12
+
+# Superseded / labelled binaries
+*.backup-*.pptx
+*.bak-*.pptx
+* - Copy.pptx
+

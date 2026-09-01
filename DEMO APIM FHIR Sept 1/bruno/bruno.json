@@ -1,0 +1,6 @@
+{
+  "version": "1",
+  "name": "Northwind Health CMS-0057-F isolation proofs",
+  "type": "collection",
+  "ignore": ["node_modules", ".git"]
+}

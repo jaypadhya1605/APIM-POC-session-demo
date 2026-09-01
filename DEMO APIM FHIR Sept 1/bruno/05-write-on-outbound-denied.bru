@@ -1,0 +1,41 @@
+meta {
+  name: 05 Write on an outbound route - EXPECT 403
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{gateway}}/payera/outbound/Patient
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{tokA}}
+  Accept: application/fhir+json
+  Content-Type: application/fhir+json
+}
+
+body:json {
+  {
+    "resourceType": "Patient",
+    "name": [{ "family": "ShouldNeverLand" }]
+  }
+}
+
+assert {
+  res.status: eq 403
+}
+
+docs {
+  Assertion 7. The correct payer, the correct credential, the wrong verb.
+
+  Layer 3 holds a per-route method allow-list. Outbound is read-only by
+  definition: GET and the Group export, nothing else. There is no configuration
+  in which this POST succeeds without editing the policy.
+
+  This is the direct answer to Platform Engineering's question from 8/12 -
+  whether one FHIR service can safely serve inbound and outbound at once.
+  The route is not a suggestion about which door to use. It is the only door
+  that exists, and each door runs a different allow-list before it opens.
+}

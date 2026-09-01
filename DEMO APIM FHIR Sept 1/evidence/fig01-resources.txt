@@ -1,0 +1,12 @@
+Name                                                    Type                                                Location
+------------------------------------------------------  --------------------------------------------------  ----------
+apim-poc-ahds-demo01                                  Microsoft.ApiManagement/service                     eastus2
+stpocahdsdemo01-77777777-7777-7777-7777-777777777777  Microsoft.EventGrid/systemTopics                    eastus2
+ahdspocdemo01                                         Microsoft.HealthcareApis/workspaces                 eastus2
+ahdspocdemo01/fhir-payerb                             Microsoft.HealthcareApis/workspaces/fhirservices    eastus2
+ahdspocdemo01/fhir-payera                             Microsoft.HealthcareApis/workspaces/fhirservices    eastus2
+appi-ahds-demo01                                      Microsoft.Insights/components                       eastus2
+kv-poc-ahds-demo01                                    Microsoft.KeyVault/vaults                           eastus2
+log-ahds-demo01                                       Microsoft.OperationalInsights/workspaces            eastus2
+stpocahdsdemo01                                       Microsoft.Storage/storageAccounts                   eastus2
+Failure Anomalies - appi-ahds-demo01                  microsoft.alertsmanagement/smartDetectorAlertRules  global

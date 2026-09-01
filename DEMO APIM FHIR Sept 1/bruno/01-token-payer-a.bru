@@ -1,0 +1,34 @@
+meta {
+  name: 01 Token - payer A
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://login.microsoftonline.com/{{tenant}}/oauth2/v2.0/token
+  body: formUrlEncoded
+  auth: none
+}
+
+body:form-urlencoded {
+  grant_type: client_credentials
+  client_id: {{payerAAppId}}
+  client_secret: {{payerASecret}}
+  scope: {{fhirA}}/.default
+}
+
+script:post-response {
+  bru.setVar("tokA", res.body.access_token);
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  SMART on FHIR Backend Services shape: client_credentials, no user present.
+
+  Contoso Health Plan's application. Note the scope - the token is minted for
+  payer A's FHIR audience. Request 02 mints payer B's app against this same
+  audience, which is the cross-payer case.
+}

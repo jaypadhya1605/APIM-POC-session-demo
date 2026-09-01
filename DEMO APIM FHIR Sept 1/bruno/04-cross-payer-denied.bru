@@ -1,0 +1,38 @@
+meta {
+  name: 04 Payer B credential on payer A route - EXPECT 403
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{gateway}}/payera/outbound/Patient?_count=5
+  body: none
+  auth: none
+}
+
+params:query {
+  _count: 5
+}
+
+headers {
+  Authorization: Bearer {{tokB_forA}}
+  Accept: application/fhir+json
+}
+
+assert {
+  res.status: eq 403
+}
+
+docs {
+  Assertion 4. The headline result.
+
+  The token in this request is the one Entra issued in request 02 - valid
+  signature, correct audience, not expired, not forged.
+
+  Layer 2 reads the appid claim, looks it up in the entitlement named value,
+  finds "payerb", compares it to the payer implied by the route, and refuses.
+
+  This is the difference between a boundary that trusts the token and a
+  boundary that checks entitlement. Entra answered "who are you". Only the
+  gateway answers "and are you allowed to be here".
+}
