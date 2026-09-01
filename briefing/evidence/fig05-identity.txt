@@ -1,6 +1,0 @@
-apim service      : apim-poc-ahds-demo01
-sku               : BasicV2
-gateway url       : https://apim-poc-ahds-demo01.azure-api.net
-identity type     : SystemAssigned
-  principalId  (object id, used in RBAC) : dddddddd-dddd-dddd-dddd-dddddddddddd
-  tenantId                                : 11111111-1111-1111-1111-111111111111

@@ -1,6 +1,0 @@
-DisplayName                                          Path             Protocols
----------------------------------------------------  ---------------  -----------
-Contoso Health Plan - Inbound (ingest)               payera/inbound   https
-Contoso Health Plan - Outbound (payer pull)          payera/outbound  https
-Fabrikam Medicare Advantage - Inbound (ingest)       payerb/inbound   https
-Fabrikam Medicare Advantage - Outbound (payer pull)  payerb/outbound  https
