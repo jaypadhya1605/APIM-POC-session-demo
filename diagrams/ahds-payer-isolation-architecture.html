@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  html,body { margin:0; padding:0; background:#fff; }
+  svg { display:block; }
+  .t     { font-family:'Segoe UI',system-ui,sans-serif; }
+  .mono  { font-family:Consolas,'Cascadia Mono',ui-monospace,monospace; }
+  .glab  { font-size:15px; font-weight:600; letter-spacing:1.4px; fill:#64748B; }
+  .gsub  { font-size:12.5px; fill:#94A3B8; }
+  .h1    { font-size:40px; font-weight:600; fill:#0F172A; }
+  .h2    { font-size:19px; fill:#64748B; }
+  .cardh { font-size:15.5px; font-weight:600; }
+  .body  { font-size:14px; }
+  .small { font-size:12.5px; }
+  .alab  { font-size:13.5px; fill:#475569; font-weight:700; }
+  .asub  { font-size:11.5px; fill:#94A3B8; }
+</style>
+</head>
+<body>
+<svg width="2580" height="1090" viewBox="0 0 2580 1090" xmlns="http://www.w3.org/2000/svg" class="t">
+<defs>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#64748B"/>
+  </marker>
+  <marker id="arR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#D64A3E"/>
+  </marker>
+  <marker id="arP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#7B61C4"/>
+  </marker>
+</defs>
+
+<rect width="2580" height="1090" fill="#FFFFFF"/>
+
+<!-- title -->
+<text class="h1" x="60" y="58">Payer isolation on Azure Health Data Services</text>
+<text class="h2" x="60" y="94">API Management is the only path to FHIR &#183; physical separation per payer, logical separation per contract</text>
+
+<!-- ============ bypass corridor ============ -->
+<path d="M2390,228 L2390,175 L1640,175 L1640,222" fill="none" stroke="#D64A3E" stroke-width="2.5"
+      stroke-dasharray="9 6" marker-end="url(#arR)"/>
+<rect x="1741" y="146" width="548" height="26" fill="#fff"/>
+<text class="body" x="2015" y="165" text-anchor="middle" fill="#B3261E" font-weight="600">payer token sent straight to the FHIR service &#8594; 403</text>
+
+<!-- ============ column 1 : sources ============ -->
+<rect x="60" y="230" width="280" height="310" rx="14" fill="#F7F9FC" stroke="#D6DFEA"/>
+<text class="glab" x="84" y="262">PAYER SOURCES</text>
+
+<rect x="84" y="290" width="232" height="105" rx="10" fill="#FFFFFF" stroke="#B9C2CC"/>
+<text class="cardh" x="100" y="322" fill="#1F2937">Contoso Health Plan</text>
+<text class="small" x="100" y="346" fill="#64748B">FHIR endpoint</text>
+<text class="small" x="100" y="370" fill="#0F766E" font-weight="600">CT-3456 &#183; CT-7788</text>
+
+<rect x="84" y="415" width="232" height="105" rx="10" fill="#FFFFFF" stroke="#B9C2CC"/>
+<text class="cardh" x="100" y="443" fill="#1F2937">Fabrikam Medicare</text>
+<text class="cardh" x="100" y="464" fill="#1F2937">Advantage</text>
+<text class="small" x="100" y="488" fill="#64748B">FHIR endpoint</text>
+<text class="small" x="100" y="510" fill="#0F766E" font-weight="600">CT-9001</text>
+
+<!-- ============ column 2 : APIM inbound ============ -->
+<rect x="380" y="230" width="340" height="370" rx="14" fill="#F2F7FD" stroke="#C6DCF2"/>
+<text class="glab" x="404" y="262" fill="#1B6EC2">API MANAGEMENT &#8212; INBOUND</text>
+
+<rect x="404" y="290" width="292" height="290" rx="10" fill="#0F6CBD"/>
+<text class="mono" x="420" y="326" font-size="15" fill="#FFFFFF">/payera/inbound</text>
+<text class="mono" x="420" y="350" font-size="15" fill="#FFFFFF">/payerb/inbound</text>
+<line x1="420" y1="370" x2="680" y2="370" stroke="#FFFFFF" stroke-opacity="0.35"/>
+<text class="body" x="420" y="400" fill="#EAF3FB">validate-jwt &#8212; ingest identity</text>
+<text class="body" x="420" y="428" fill="#EAF3FB">ingest allow-list check</text>
+<text class="body" x="420" y="456" fill="#EAF3FB">strip caller-supplied tags</text>
+<text class="body" x="420" y="484" fill="#EAF3FB">stamp meta.tag = contract</text>
+<text class="body" x="420" y="512" fill="#FFD9D4" font-weight="600">$export &#8594; 403</text>
+<text class="body" x="420" y="540" fill="#FFD9D4" font-weight="600">payer credential &#8594; 403</text>
+
+<!-- ============ column 3 : validate ============ -->
+<rect x="760" y="230" width="270" height="370" rx="14" fill="#FFFBF0" stroke="#EBD9AE"/>
+<text class="glab" x="784" y="262" fill="#A67C00">VALIDATE &amp; SEGREGATE</text>
+
+<rect x="784" y="300" width="222" height="130" rx="10" fill="#FFF4CE" stroke="#D29200"/>
+<text class="mono" x="800" y="334" font-size="16" font-weight="700" fill="#5C4600">$validate</text>
+<text class="small" x="800" y="360" fill="#7A5C00">US Core &#183; PDex &#183; ATR</text>
+<text class="small" x="800" y="382" fill="#7A5C00">profile conformance</text>
+<text class="small" x="800" y="408" fill="#7A5C00">before anything is stored</text>
+
+<rect x="784" y="450" width="222" height="130" rx="10" fill="#FFF4CE" stroke="#D29200"/>
+<text class="cardh" x="800" y="482" fill="#5C4600">Route on outcome</text>
+<text class="small" x="800" y="508" fill="#7A5C00">clean &#8594; pdex/</text>
+<text class="small" x="800" y="530" fill="#7A5C00">rejected &#8594; quarantine/</text>
+<text class="small" x="800" y="556" fill="#7A5C00">OperationOutcome retained</text>
+
+<!-- ============ column 4 : storage ============ -->
+<rect x="1070" y="230" width="290" height="370" rx="14" fill="#F7F9FC" stroke="#D6DFEA"/>
+<text class="glab" x="1094" y="258">INTEGRATION DATA STORE</text>
+<text class="gsub mono" x="1094" y="278">allowSharedKeyAccess = false</text>
+
+<rect x="1094" y="310" width="242" height="75" rx="10" fill="#EEF4FB" stroke="#9BB8D6"/>
+<text class="mono" x="1110" y="340" font-size="15" font-weight="700" fill="#17324D">pdex/</text>
+<text class="small" x="1110" y="364" fill="#4A6070">clean NDJSON</text>
+
+<rect x="1094" y="405" width="242" height="75" rx="10" fill="#EEF4FB" stroke="#9BB8D6"/>
+<text class="mono" x="1110" y="435" font-size="15" font-weight="700" fill="#17324D">quarantine/</text>
+<text class="small" x="1110" y="459" fill="#4A6070">rejects + outcome</text>
+
+<rect x="1094" y="500" width="242" height="75" rx="10" fill="#EEF4FB" stroke="#9BB8D6"/>
+<text class="mono" x="1110" y="530" font-size="15" font-weight="700" fill="#17324D">export/</text>
+<text class="small" x="1110" y="554" fill="#4A6070">$export output</text>
+
+<!-- ============ column 5 : AHDS ============ -->
+<rect x="1490" y="230" width="300" height="370" rx="14" fill="#F9F3F9" stroke="#E0C9E0"/>
+<text class="glab" x="1514" y="258" fill="#742774">AHDS WORKSPACE</text>
+<text class="gsub" x="1514" y="278" fill="#9B6F9B">the physical boundary</text>
+
+<rect x="1514" y="310" width="252" height="125" rx="10" fill="#742774"/>
+<text class="mono" x="1532" y="345" font-size="17" font-weight="700" fill="#FFFFFF">fhir-payera</text>
+<text class="body" x="1532" y="372" fill="#EFDCEF">CT-3456 &#183; CT-7788</text>
+<text class="small" x="1532" y="398" fill="#D3B4D3" font-style="italic">logical split on meta.tag</text>
+<text class="small" x="1532" y="420" fill="#D3B4D3" font-style="italic">one Group per contract</text>
+
+<rect x="1514" y="455" width="252" height="125" rx="10" fill="#742774"/>
+<text class="mono" x="1532" y="490" font-size="17" font-weight="700" fill="#FFFFFF">fhir-payerb</text>
+<text class="body" x="1532" y="517" fill="#EFDCEF">CT-9001</text>
+<text class="small" x="1532" y="543" fill="#D3B4D3" font-style="italic">logical split on meta.tag</text>
+<text class="small" x="1532" y="565" fill="#D3B4D3" font-style="italic">one Group per contract</text>
+
+<!-- ============ column 6 : APIM outbound ============ -->
+<rect x="1850" y="230" width="350" height="370" rx="14" fill="#F2F7FD" stroke="#C6DCF2"/>
+<text class="glab" x="1874" y="262" fill="#1B6EC2">API MANAGEMENT &#8212; OUTBOUND</text>
+
+<rect x="1874" y="290" width="302" height="290" rx="10" fill="#0F6CBD"/>
+<text class="mono" x="1890" y="326" font-size="15" fill="#FFFFFF">/payera/outbound</text>
+<text class="mono" x="1890" y="350" font-size="15" fill="#FFFFFF">/payerb/outbound</text>
+<line x1="1890" y1="370" x2="2160" y2="370" stroke="#FFFFFF" stroke-opacity="0.35"/>
+<text class="body" x="1890" y="400" fill="#EAF3FB">SMART Backend Services JWT</text>
+<text class="body" x="1890" y="428" fill="#EAF3FB">entitlement lookup by appId</text>
+<text class="body" x="1890" y="456" fill="#EAF3FB">Group/{id}/$export only</text>
+<text class="body" x="1890" y="484" fill="#EAF3FB">_tag forced to own contracts</text>
+<text class="body" x="1890" y="512" fill="#EAF3FB">1 concurrent export per payer</text>
+<text class="body" x="1890" y="540" fill="#FFD9D4" font-weight="600">writes &#8594; 403</text>
+
+<!-- ============ column 7 : consumers ============ -->
+<rect x="2250" y="230" width="280" height="310" rx="14" fill="#F7F9FC" stroke="#D6DFEA"/>
+<text class="glab" x="2274" y="262">PAYER CONSUMERS</text>
+
+<rect x="2274" y="290" width="232" height="105" rx="10" fill="#FFFFFF" stroke="#B9C2CC"/>
+<text class="cardh" x="2290" y="322" fill="#1F2937">Contoso client</text>
+<text class="small" x="2290" y="348" fill="#0F766E" font-weight="600">sees CT-3456 + CT-7788</text>
+<text class="small" x="2290" y="372" fill="#94A3B8">nothing else exists</text>
+
+<rect x="2274" y="415" width="232" height="105" rx="10" fill="#FFFFFF" stroke="#B9C2CC"/>
+<text class="cardh" x="2290" y="447" fill="#1F2937">Fabrikam client</text>
+<text class="small" x="2290" y="473" fill="#0F766E" font-weight="600">sees CT-9001</text>
+<text class="small" x="2290" y="497" fill="#94A3B8">nothing else exists</text>
+
+<!-- ============ flow arrows ============ -->
+<line x1="342" y1="415" x2="374" y2="415" stroke="#64748B" stroke-width="2.5" marker-end="url(#ar)"/>
+<line x1="722" y1="415" x2="754" y2="415" stroke="#64748B" stroke-width="2.5" marker-end="url(#ar)"/>
+<line x1="1032" y1="415" x2="1064" y2="415" stroke="#64748B" stroke-width="2.5" marker-end="url(#ar)"/>
+<line x1="1362" y1="415" x2="1484" y2="415" stroke="#64748B" stroke-width="2.5" marker-end="url(#ar)"/>
+<line x1="1792" y1="415" x2="1844" y2="415" stroke="#64748B" stroke-width="2.5" marker-end="url(#ar)"/>
+<line x1="2202" y1="415" x2="2244" y2="415" stroke="#64748B" stroke-width="2.5" marker-end="url(#ar)"/>
+
+<text class="alab mono" x="1423" y="404" text-anchor="middle">$import</text>
+<text class="asub" x="1423" y="440" text-anchor="middle">system-assigned</text>
+<text class="asub" x="1423" y="456" text-anchor="middle">managed identity</text>
+
+<text class="alab mono" x="1818" y="404" text-anchor="middle">$export</text>
+
+<!-- ============ Entra band ============ -->
+<path d="M550,696 L550,606" fill="none" stroke="#7B61C4" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#arP)"/>
+<path d="M2025,696 L2025,606" fill="none" stroke="#7B61C4" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#arP)"/>
+
+<rect x="380" y="700" width="1820" height="140" rx="14" fill="#F5F2FB" stroke="#C9BDE6"/>
+<text class="glab" x="410" y="734" fill="#5B44A8">MICROSOFT ENTRA ID</text>
+<text x="410" y="772" font-size="17" fill="#3F3268">One app registration per payer. That is the only credential they hold &#8212; no keys, no shared secrets, no storage account access.</text>
+<text x="410" y="806" font-size="17" fill="#3F3268" font-weight="600">Zero Azure RBAC role assignments on the FHIR services. Only API Management&#8217;s managed identity is a FHIR Data Contributor.</text>
+
+<!-- ============ bottom row ============ -->
+<rect x="60" y="880" width="1210" height="150" rx="14" fill="#F0F8F2" stroke="#B7DCC1"/>
+<text class="glab" x="90" y="914" fill="#2E7D4F">OBSERVABILITY</text>
+<text x="90" y="952" font-size="16" fill="#274F38">Log Analytics + Application Insights &#183; AHDS AuditLogs &#183; APIM GatewayLogs &#183; StorageBlobLogs.</text>
+<text x="90" y="982" font-size="16" fill="#274F38">Every call is attributed to a payer app registration and a contract, on both sides of the gateway.</text>
+<text x="90" y="1012" font-size="16" fill="#4E7A60" font-style="italic">The audit trail is the evidence, not the assertion.</text>
+
+<rect x="1320" y="880" width="1210" height="150" rx="14" fill="#FDF2F1" stroke="#EFB9B2"/>
+<text class="glab" x="1350" y="914" fill="#B3261E">THE KEYSTONE &#8212; WHY THE GATEWAY CANNOT BE BYPASSED</text>
+<text x="1350" y="952" font-size="16" fill="#5C1F19">A payer&#8217;s token is real and correctly audienced for its own FHIR service. Sent straight to that</text>
+<text x="1350" y="982" font-size="16" fill="#5C1F19">service it still returns <tspan font-weight="700">403</tspan>, because the app registration holds no Azure role at all.</text>
+<text x="1350" y="1012" font-size="16" fill="#8A3A31" font-style="italic">Proven live as assertion 12 of 15 in run-isolation-tests.ps1.</text>
+
+</svg>
+</body>
+</html>

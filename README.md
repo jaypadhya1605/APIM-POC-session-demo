@@ -13,6 +13,25 @@ contract boundary holds.
 
 ---
 
+## The architecture
+
+![Payer isolation on Azure Health Data Services](diagrams/ahds-payer-isolation-architecture.png)
+
+Read it left to right — data enters on the left and leaves on the right, and the two blue
+blocks are the same API Management instance doing two different jobs.
+
+| Band | What to look at |
+|---|---|
+| **Inbound gateway** | Payers write here. The gateway stamps `meta.tag` with the contract before anything is stored, and strips any tag the caller supplied. `$export` is refused on this side. |
+| **Validate & segregate** | `$validate` runs against the profiles first. Clean resources go to `pdex/`, rejects go to `quarantine/` with their `OperationOutcome`. Nothing unvalidated reaches FHIR. |
+| **AHDS workspace** | One FHIR service per payer is the *physical* boundary. Inside a service, contracts are separated *logically* by `meta.tag` and one `Group` per contract. |
+| **Outbound gateway** | Payers read here. The caller's app id is looked up in the entitlement map, `_tag` is forced to that caller's own contracts, and only `Group/{id}/$export` is allowed. Writes are refused on this side. |
+| **Entra band** | The purple lines are the only credential in the picture. Each payer has one app registration and **no Azure role assignment at all**. |
+| **Red dashed line** | The bypass attempt — a real, correctly audienced payer token sent straight to the FHIR service. It returns `403`. That is the line that makes the rest of the diagram trustworthy. |
+
+Editable source: [`diagrams/ahds-payer-isolation-architecture.html`](diagrams/ahds-payer-isolation-architecture.html)
+(hand-written SVG) and [`diagrams/architecture.mmd`](diagrams/architecture.mmd) (Mermaid).
+
 ## The problem this solves
 
 One FHIR service per payer gives you a physical boundary. It does not give you a
@@ -30,7 +49,7 @@ somewhere. This puts it in the gateway, and then proves it.
 | `tests/` | `isolation-proofs.http` — the same assertions as REST calls |
 | `docs/` | Architecture, decisions, capacity, SMART Backend Services, control plane, cost model |
 | `runbooks/` | Payer onboarding, import troubleshooting |
-| `DEMO APIM FHIR Sept 1/` | 20-slide deck with speaker notes, demo script, Bruno collection, rendered evidence |
+| `DEMO APIM FHIR Sept 1/` | 19-slide deck with speaker notes, demo script, Bruno collection, rendered evidence |
 | `briefing/` | Word runbook generator and the evidence figures it embeds |
 
 ## The six enforcement layers
