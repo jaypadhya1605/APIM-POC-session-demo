@@ -9,7 +9,6 @@ and the integration lead's seven-question set.
 |---|---|
 | Know whether the asks are answered | [VALIDATION.md](VALIDATION.md) |
 | Run the demo | [DEMO-SCRIPT.md](DEMO-SCRIPT.md) |
-| Present it | [slides/AHDS-Payer-Isolation-Reference-Implementation.pptx](slides/AHDS-Payer-Isolation-Reference-Implementation.pptx) |
 | Understand the design | [docs/01-architecture.md](docs/01-architecture.md) |
 
 ---
@@ -38,9 +37,6 @@ Gateway: `https://apim-poc-ahds-demo01.azure-api.net`
 00-EXECUTIVE-BRIEF.md        the read-first document
 VALIDATION.md                every ask mapped to runnable evidence, plus the one open gap
 DEMO-SCRIPT.md               how to run the demo: 3-minute proof or 25-minute walkthrough
-slides/
-  build-deck.py              regenerates the deck; the deck is a build artifact
-  AHDS-Payer-Isolation-Reference-Implementation.pptx   20 slides, end to end
 docs/
   01-architecture.md         component-by-component walkthrough
   02-architecture-decisions.md     every open item from 8/12, closed
@@ -49,7 +45,6 @@ docs/
   05-capacity-and-scale.md   the unanswered question, framed for the product group
   06-smart-backend-services.md
   07-apim-control-plane.md   the six policy layers and why they are ordered that way
-  08-cost-model.md
 diagrams/
   northwind-ahds-reference-architecture.drawio   4 pages, editable
   architecture.mmd                                Mermaid rendering
@@ -129,16 +124,13 @@ which is better hygiene than the Key Vault path it replaces.
 
 ---
 
-## Cost control
-
-≈ $160/month if left running; ≈ $5/demo day if deleted between sessions. **The hourly cost is APIM,
-not FHIR** — the two FHIR services billed $0.00 last month.
+## Tearing down
 
 ```powershell
 az group delete -n rg-ahds-fhir-poc --yes --no-wait
 ```
 
-Full breakdown: [docs/08-cost-model.md](docs/08-cost-model.md).
+Everything is in Bicep, so the environment rebuilds from nothing when it is next needed.
 
 ---
 

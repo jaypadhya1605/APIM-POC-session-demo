@@ -47,7 +47,7 @@ somewhere. This puts it in the gateway, and then proves it.
 | `apim/policies/` | The two policies that do the work: `payer-inbound.xml`, `payer-outbound.xml` |
 | `scripts/` | Onboard a payer, mint a demo token, run the isolation suite, revoke a contract live, show audit attribution |
 | `tests/` | `isolation-proofs.http` — the same assertions as REST calls |
-| `docs/` | Architecture, decisions, capacity, SMART Backend Services, control plane, cost model |
+| `docs/` | Architecture, decisions, capacity, SMART Backend Services, control plane |
 | `runbooks/` | Payer onboarding, import troubleshooting |
 | `DEMO APIM FHIR Sept 1/` | Bruno request collection, captured evidence, portal screenshots, rendered slides |
 
@@ -92,15 +92,6 @@ az deployment group create `
 `infra/main.bicep` takes a `payers` array — adding a payer is a parameter change, not a
 new template. Review `infra/main.bicepparam` first: publisher details, operator object id
 and the payer list are all environment-specific.
-
-## Cost
-
-Roughly **$160/month** left running 24x7 for the two-payer POC, and **~96% of that is
-APIM** — the two FHIR services billed **$0.00** last month. Workspace-based Azure Health
-Data Services has no hourly meter at all; it bills on requests, stored GB and export
-volume, so instance count is not a billable dimension. Production estimate at ~1.4 TB and
-30-40 payers is **about $1,700/month**, of which ~$800 is FHIR consumption. See
-[docs/08-cost-model.md](docs/08-cost-model.md) for the actual billed meters.
 
 ---
 

@@ -252,9 +252,7 @@ removes the problem entirely.
 az group delete -n rg-ahds-fhir-poc --yes --no-wait
 ```
 
-APIM bills by the hour whether or not a call arrives, and it is 96% of this environment's bill —
-FHIR itself costs nothing at rest. Delete between demos: ~$5 per demo day versus ~$160 per month
-left running.
+Everything is in Bicep, so rebuild from nothing whenever the environment is next needed.
 
 ---
 

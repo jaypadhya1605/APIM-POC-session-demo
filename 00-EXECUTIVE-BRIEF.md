@@ -96,26 +96,6 @@ behaviour rather than an estimate. Recommendation: run it before committing to a
 
 ---
 
-## Cost
-
-| | |
-|---|---|
-| This POC, running 24×7 | ≈ **$160/month** |
-| This POC, per demo day | ≈ **$5** |
-| A two-hour smoke test | ≈ **$1** |
-| Northwind Health production estimate, 1.4 TB + 30M resources/month | ≈ **$800/month** for FHIR consumption |
-
-There is **no hourly charge of any kind** on AHDS FHIR — billing is consumption-based across
-requests, storage and export volume. The two FHIR services in this POC billed **$0.00** in August.
-Forty lightly-used payer instances do not cost forty times one busy instance. This is the single
-most common objection to Option 1 and it does not hold.
-
-The cost that does accrue hourly is **APIM**, at 96% of the POC bill. Delete the resource group
-between demos for that reason, not for FHIR.
-Breakdown: [docs/08-cost-model.md](docs/08-cost-model.md).
-
----
-
 ## What to look at, in order
 
 | # | Artifact | Why |

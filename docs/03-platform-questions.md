@@ -21,7 +21,6 @@ answered in full below.
 | Quota tickets | 400 → far beyond any reasonable grant | one, 10 → 40 |
 | Onboarding a new contract | provision an instance | insert a row in an entitlement map |
 | Blast radius of a policy defect | one contract | one payer |
-| Cost | same | same — billing is consumption-based |
 
 ### Can one workspace hold them all?
 
@@ -29,17 +28,6 @@ Yes. The default is 10 workspaces and 10 FHIR services per subscription; both ra
 ticket. Forty services fit comfortably inside a single workspace, so only the **service** quota
 needs raising. Use the workspace as the environment boundary — one per Dev/QA/Prod, in separate
 subscriptions — rather than as a payer boundary.
-
-### Cost implication, stated directly
-
-There is **no hourly charge of any kind**. AHDS FHIR bills on consumption: request volume,
-structured storage, and export volume. Forty lightly-used payer instances do not cost forty times
-one busy instance — instance count is not a billable dimension. At Northwind Health's stated volume —
-1.4 TB and ~30M resources/month — expect roughly **$800/month** for the FHIR tier regardless of how
-that traffic is distributed across instances.
-
-This matters because "40 instances sounds expensive" is the most common objection to this design,
-and it is not correct.
 
 ### The maintenance implication that is real
 
